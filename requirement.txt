@@ -1,0 +1,6 @@
+pandas
+numpy
+scikit-learn
+flask
+joblib
+tensorflow==2.13.0

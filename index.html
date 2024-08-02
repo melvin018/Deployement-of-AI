@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction App</title>
+</head>
+<body>
+    <h1>Predict</h1>
+    <form id="prediction-form">
+        <label for="value1">Value1:</label>
+        <input type="text" id="value1" name="value1"><br><br>
+        <label for="value2">Value2:</label>
+        <input type="text" id="value2" name="value2"><br><br>
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function submitForm() {
+            // Get form data
+            const value1 = document.getElementById('value1').value;
+            const value2 = document.getElementById('value2').value;
+            
+            // Prepare data
+            const data = [{
+                Value1: parseFloat(value1),
+                Value2: parseFloat(value2)
+            }];
+
+            // Send data to the Flask server
+            sendPredictionRequest(data);
+        }
+
+        function sendPredictionRequest(data) {
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'  // Ensure the Content-Type is set to application/json
+                },
+                body: JSON.stringify(data)  // Convert the data to a JSON string
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('result').innerText = 'Prediction: ' + result;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>

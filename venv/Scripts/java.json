@@ -1,0 +1,16 @@
+function sendPredictionRequest(data) {
+    fetch('/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'  // Ensure the Content-Type is set to application/json
+        },
+        body: JSON.stringify(data)  // Convert the data to a JSON string
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);  // Handle the result here
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
